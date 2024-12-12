@@ -8,6 +8,7 @@ import thogakade.view.AddCustomerForm;
 import thogakade.view.SearchCustomerForm;
 import thogakade.view.UpdateCustomerForm;
 import thogakade.view.ViewCustomerForm;
+import thogakade.view.*;
 
 /**
  *
@@ -20,5 +21,6 @@ public class StartMain {
         new SearchCustomerForm().setVisible(true);
         new UpdateCustomerForm().setVisible(true);
         new ViewCustomerForm().setVisible(true);
+        new DeleteCustomerForm().setVisible(true);
     }
 }

@@ -15,12 +15,12 @@ import thogakade.model.Customer;
  *
  * @author nirot
  */
-public class SearchCustomerForm extends javax.swing.JFrame {
+public class DeleteCustomerForm extends javax.swing.JFrame {
 
     /**
      * Creates new form AddCustomerForm
      */
-    public SearchCustomerForm() {
+    public DeleteCustomerForm() {
         initComponents();
     }
 
@@ -43,13 +43,13 @@ public class SearchCustomerForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtSalary = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
-        btnSearch = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Search Customer Form");
+        jLabel1.setText("Delete Customer Form");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Customer ID");
@@ -87,11 +87,11 @@ public class SearchCustomerForm extends javax.swing.JFrame {
             }
         });
 
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -119,7 +119,7 @@ public class SearchCustomerForm extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnSearch)
+                .addComponent(btnDelete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancel))
         );
@@ -147,7 +147,7 @@ public class SearchCustomerForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
-                    .addComponent(btnSearch))
+                    .addComponent(btnDelete))
                 .addContainerGap())
         );
 
@@ -158,27 +158,39 @@ public class SearchCustomerForm extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         try {
-            //txtIdActionPerformed(evt);
-            Customer customer = CustomerController.searchCustomer(txtId.getText());
+            boolean customer = CustomerController.deleteCustomer(txtId.getText());
+            if(customer){
+             JOptionPane.showMessageDialog(this, "Delete Successfull"); 
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+         try {
+        Customer customer = CustomerController.searchCustomer(txtId.getText());
             if(customer!=null){
                 txtName.setText(customer.getName());
                 txtAddress.setText(customer.getAddress());
                 txtSalary.setText(customer.getSalary()+"");
-            
             }else{
                 JOptionPane.showMessageDialog(this, "Customer Not Found"); 
             }
+            
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SearchCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SearchCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-
+         
+         
+                                  
     }//GEN-LAST:event_txtIdActionPerformed
 
     /**
@@ -198,14 +210,18 @@ public class SearchCustomerForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCustomerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -214,14 +230,14 @@ public class SearchCustomerForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchCustomerForm().setVisible(true);
+                new DeleteCustomerForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
