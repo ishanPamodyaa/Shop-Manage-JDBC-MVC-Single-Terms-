@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.*;
+import java.util.ArrayList;
 import thogakade.db.DBConnection;
 
 
@@ -43,8 +44,56 @@ public class CustomerController {
        ResultSet rst = stm.executeQuery("select * from Customer where id='"+id+"'");
        
        if(rst.next()){
-           return new Customer(rst.getString("id"), rst.getString("name"), rst.getString("address"), rst.getDouble("salary"));
+           return new Customer(rst.getString("id"), rst.getString("name"), rst.getString("address"), rst.getDouble("salary") );
        }
        return null;
     }
+    
+     public static boolean updateCustomer(Customer customer) throws ClassNotFoundException, SQLException{
+        
+       DBConnection dbcon = DBConnection.getInstance();
+       Connection connection = dbcon.getConnection();
+     
+       PreparedStatement stm =  connection.prepareStatement("update Customer set name=?, address=?,salary=? where id=?");
+       stm.setObject(4,customer.getId());
+       stm.setObject(1,customer.getName());
+       stm.setObject(2,customer.getAddress());
+       stm.setObject(3,customer.getSalary());
+       
+       int res = stm.executeUpdate();
+       return res> 0;
+   } 
+    public static boolean deleteCustomer(String  id) throws ClassNotFoundException, SQLException{
+        
+        DBConnection dbcon = DBConnection.getInstance();
+       Connection connection = dbcon.getConnection();
+       
+       Statement stm = connection.createStatement();
+       int res = stm.executeUpdate("Delete from Customer where id='"+id+"' ");
+       
+       return res>0;
+    }
+    
+    public static ArrayList<Customer> getAllCustomers() throws ClassNotFoundException, SQLException{
+    
+        ArrayList <Customer> customerList = new ArrayList<>();
+   
+          DBConnection dbcon = DBConnection.getInstance();
+       Connection connection = dbcon.getConnection();
+       
+       Statement stm = connection.createStatement();
+       
+       ResultSet rst = stm.executeQuery("select * from Customer");
+    
+       while(rst.next()){
+           Customer customer =  new Customer(rst.getString("id"), rst.getString("name"), rst.getString("address"), rst.getDouble("salary") );
+           
+           customerList.add(customer);
+       }
+       return customerList;
+       
+    
+    }
+    
+    
 }
