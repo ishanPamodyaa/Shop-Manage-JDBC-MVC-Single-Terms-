@@ -179,6 +179,23 @@ public class SearchCustomerForm extends javax.swing.JFrame {
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
 
+         try {
+            //txtIdActionPerformed(evt);
+            Customer customer = CustomerController.searchCustomer(txtId.getText());
+            if(customer!=null){
+                txtName.setText(customer.getName());
+                txtAddress.setText(customer.getAddress());
+                txtSalary.setText(customer.getSalary()+"");
+            
+            }else{
+                JOptionPane.showMessageDialog(this, "Customer Not Found"); 
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SearchCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_txtIdActionPerformed
 
     /**

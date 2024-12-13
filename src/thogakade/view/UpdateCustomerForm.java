@@ -4,6 +4,13 @@
  */
 package thogakade.view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import thogakade.controller.CustomerController;
+import thogakade.model.Customer;
+
 /**
  *
  * @author nirot
@@ -48,6 +55,11 @@ public class UpdateCustomerForm extends javax.swing.JFrame {
         jLabel2.setText("Customer ID");
 
         txtId.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Name");
@@ -74,6 +86,11 @@ public class UpdateCustomerForm extends javax.swing.JFrame {
 
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,6 +154,44 @@ public class UpdateCustomerForm extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        try {
+            Customer customer = new Customer(txtId.getText(), txtName.getText(), txtAddress.getText(), Double.parseDouble(txtSalary.getText()));
+            
+            boolean isUpdate = CustomerController.updateCustomer(customer);
+            
+            if(isUpdate){
+                JOptionPane.showMessageDialog(this, "Update Successfull ");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdateCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+          
+        try {
+        Customer customer = CustomerController.searchCustomer(txtId.getText());
+            if(customer!=null){
+                txtName.setText(customer.getName());
+                txtAddress.setText(customer.getAddress());
+                txtSalary.setText(customer.getSalary()+"");
+            }else{
+                JOptionPane.showMessageDialog(this, "Customer Not Found"); 
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+    }//GEN-LAST:event_txtIdActionPerformed
 
     /**
      * @param args the command line arguments
