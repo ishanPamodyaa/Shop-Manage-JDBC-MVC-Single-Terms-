@@ -21,12 +21,12 @@ class OrderDetailController {
         for( OrderDetail orderDetail : orderDetailList){
             boolean isAddOrderDetail = addOrderDetail(orderDetail);
             
-                if(isAddOrderDetail){
+                if(!isAddOrderDetail){
                     return false;
                 }
        
         } 
-        return true;
+        return !orderDetailList.isEmpty();
     }
     public static boolean addOrderDetail(OrderDetail orderDetail) throws ClassNotFoundException, SQLException {
        

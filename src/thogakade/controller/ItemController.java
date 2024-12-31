@@ -96,7 +96,7 @@ public class ItemController {
                 return false;
             }
         }
-        return true;
+        return !orderDetailList.isEmpty();
     }
     
     public static boolean updateItemStock(String itemCode, int qty) throws ClassNotFoundException, SQLException{

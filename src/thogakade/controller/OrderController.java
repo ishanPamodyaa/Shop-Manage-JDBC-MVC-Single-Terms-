@@ -28,6 +28,11 @@ public class OrderController {
         return rst.next() ? rst.getString("id") : null;
     }
     public static boolean placeOrder(Order order) throws ClassNotFoundException, SQLException{
+   
+    Connection connection =DBConnection.getInstance().getConnection();
+    
+    try{
+    connection.setAutoCommit(false);
     PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("Insert into Orders values(?,?,?)");
        
     stm.setObject(1,order.getId());
@@ -40,12 +45,16 @@ public class OrderController {
         if(isAddOrderDetails){
             boolean isUpdate=ItemController.updateItemStock(order.getOrderDetailList());
             if(isUpdate){
+                connection.commit();
                 return true;
             }
-        }
-        return false;
+        } 
     }
-    return true;
+     connection.rollback();
+     return false;
+    }finally{
+        connection.setAutoCommit(true);
+    }
     }
     
     
