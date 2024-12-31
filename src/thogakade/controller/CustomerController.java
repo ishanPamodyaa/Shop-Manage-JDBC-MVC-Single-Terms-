@@ -94,6 +94,18 @@ public class CustomerController {
        
     
     }
+      public static ArrayList<String> getAllCustomerIds() throws ClassNotFoundException, SQLException{
+        
+         ResultSet rst  = DBConnection.getInstance().getConnection()
+                .prepareStatement("SELECT id FROM Customer")
+                .executeQuery();
+         ArrayList<String> idSet= new ArrayList<>();
+          System.out.println();
+         while (rst.next()) {            
+            idSet.add(rst.getString(1));
+        }
+         return idSet;
+    }
     
     
 }
